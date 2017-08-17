@@ -1,0 +1,15 @@
+*.class
+*.war
+*.ear
+.idea/
+/idea/
+*.iml
+*.ipr
+*.iws
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+.DS_Store
+Thumbs.db
