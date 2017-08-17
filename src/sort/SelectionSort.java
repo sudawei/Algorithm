@@ -9,7 +9,7 @@ import util.GeneratorArrays;
 public class SelectionSort {
     public static void main(String[] args) {
 
-        int n = 100000;
+        int n = 1000000;
         int[] arr= GeneratorArrays.randomArray(n,0,n);
         long startTime = System.currentTimeMillis();
         sort(arr);
