@@ -20,7 +20,7 @@ public class GeneratorArrays {
         int[] arr = new int[size];
         Random random = new Random();
         for(int i=0;i<size;i++){
-            arr[i] =random.nextInt(rangR)+rangL;
+            arr[i] =  random.nextInt(rangR)%(rangR-rangL+1) + rangL;
         }
         return  arr;
     }
@@ -37,4 +37,5 @@ public class GeneratorArrays {
         arr[x] = arr[y];
         arr[y] = temp;
     }
+
 }
