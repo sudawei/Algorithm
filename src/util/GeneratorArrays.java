@@ -38,4 +38,14 @@ public class GeneratorArrays {
         arr[y] = temp;
     }
 
+    /**
+     * 打印数组arr
+     * @param arr
+     */
+    public  static void print(int[] arr){
+        for (int i = 0; i <arr.length ; i++) {
+            System.out.print(arr[i]+" ");
+        }
+    }
+
 }
