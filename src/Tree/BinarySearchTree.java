@@ -7,7 +7,7 @@ import java.util.Queue;
 
 /**
  * Created by Administrator on 2017/8/23/023.
- * 二分搜索树
+ * 二分搜索树,时间复杂度为O（LogN）
  */
 public class BinarySearchTree {
     //节点类型
@@ -22,6 +22,13 @@ public class BinarySearchTree {
             this.value = value;
             this.left = null;
             this.right = null;
+        }
+        //复制一个node
+        public Node(Node node) {
+            this.key = node.key;
+            this.value = node.value;
+            this.left = node.left;
+            this.right = node.right;
         }
     }
 
@@ -87,6 +94,37 @@ public class BinarySearchTree {
         }
     }
 
+    //查找最小值
+    public Integer minimum(){
+        assert (count != 0);
+        return minimum(root).key;
+    }
+
+    //查找最大值
+    public Integer maxmum(){
+        assert (count != 0);
+        return maxmum(root).key;
+    }
+
+    //删除最小节点
+    public void removeMin(){
+        if(root != null){
+            root = removeMin(root);
+        }
+    }
+
+    //删除最大节点
+    public void removeMax(){
+        if(root != null){
+            root = removeMax(root);
+        }
+    }
+
+    //删除键值为key的节点
+    public void remove(Integer key){
+        root = remove(root,key);
+    }
+
     //向以Node为根的二分搜索树插入（key,node）
     //返回插入新节点的二分搜索树的根
     private Node insert(Node node,Integer k ,Integer value){
@@ -103,7 +141,7 @@ public class BinarySearchTree {
         return node;
     }
 
-    //查询以Nod为根的二分搜索树中是否含有key
+    //查询以Node为根的二分搜索树中是否含有key
     private boolean contain(Node node ,Integer key){
 
         //没有找到
@@ -118,7 +156,7 @@ public class BinarySearchTree {
             return contain(node.right,key);
     }
 
-    //查找以Nod为根的二分搜索树中key对应的value
+    //查找以Node为根的二分搜索树中key对应的value
     private Integer search(Node node ,Integer key){
 
         if(node == null)
@@ -132,7 +170,7 @@ public class BinarySearchTree {
             return search(node.right,key);
     }
 
-    //以Nod为根的二分搜索树进行前序遍历
+    //以Node为根的二分搜索树进行前序遍历
     private void preOrder(Node node){
         if(node != null) {
             arr.add(node.key);
@@ -141,7 +179,7 @@ public class BinarySearchTree {
         }
     }
 
-    //以Nod为根的二分搜索树进行中序遍历
+    //以Node为根的二分搜索树进行中序遍历
     private void inOrder(Node node){
 
         if(node != null){
@@ -152,7 +190,7 @@ public class BinarySearchTree {
 
     }
 
-    //以Nod为根的二分搜索树进行后序遍历
+    //以Node为根的二分搜索树进行后序遍历
     private void postOrder(Node node){
         if(node != null){
             postOrder(node.left);
@@ -161,4 +199,85 @@ public class BinarySearchTree {
         }
 
     }
+
+    //以Node为根的二分搜索树返回最小值:最左边的节点
+    private Node minimum(Node node){
+        if(node.left == null)
+            return node;
+        return minimum(node.left);
+    }
+
+    //以Node为根的二分搜索树返回最大值:最右边的节点
+    private Node maxmum(Node node){
+        if(node.right == null)
+            return node;
+        return maxmum(node.right);
+    }
+
+    //删除以Node为根的二分搜索树最小节点
+    //返回删除节点之后新的二分搜索树的根
+    private Node removeMin(Node node){
+        if(node.left == null){
+            Node rightNode = node.right;
+            count--;
+            return rightNode;
+        }
+        node.left = removeMin(node.left);
+        return node;
+    }
+
+    //删除以Node为根的二分搜索树最大节点
+    //返回删除节点之后新的二分搜索树的根
+    private Node removeMax(Node node){
+        if(node.right == null){
+            Node leftNode = node.left;
+            count--;
+            return leftNode;
+        }
+        node.right = removeMax(node.right);
+        return node;
+    }
+
+    //删除以Node为根的二分搜索树键值为key的节点
+    //返回删除节点之后新的二分搜索树的根
+    private Node remove(Node node,Integer key){
+        if(node == null)
+            return null;
+        if(key < node.key){
+            node.left = remove(node.left, key);
+            return node;
+        }else if(key > node.key){
+            node.right =  remove(node.right,key);
+            return node;
+        }else{  //key == node.key
+            if(node.left == null){
+               Node rightNode = node.right;
+                count--;
+                return rightNode;
+            }
+            if(node.right == null){
+                Node leftNode = node.left;
+                count--;
+                return leftNode;
+            }
+
+            /**
+             * Hubbard Deletion
+             */
+            //node.left != null && node.right ！= null
+            Node delNode = node;
+            //后继节点，代替要删除的节点：要删除节点的右子树中的最小值。
+            Node successor = new Node(minimum(node.right));
+            count++;
+
+            successor.right = removeMin(node.right);
+            successor.left = node.left;
+            count--;
+            return successor;
+
+        }
+
+
+    }
+
 }
