@@ -37,8 +37,9 @@ public class QuickSort {
      * @param r
      */
     private static void quickSort(int[] arr,int l,int r){
-        if(l >= r)
+        if(l >= r) {
             return;
+        }
 
         //int p = partition(arr,l,r);
 
@@ -133,9 +134,15 @@ public class QuickSort {
         //arr[l+1...i) <= v ,arr(j...r] >= v
         int i = l+1, j = r;
         while (true){
-            while (i <= r && arr[i] < v) i++;
-            while (j >= l+1 && arr[j] > v) j--;
-            if(i > j) break;
+            while (i <= r && arr[i] < v) {
+                i++;
+            }
+            while (j >= l+1 && arr[j] > v) {
+                j--;
+            }
+            if(i > j) {
+                break;
+            }
             //此时i所指的元素>=V或者j所指的元素=<V
             GeneratorArrays.swap(arr,i,j);
             i++;
@@ -153,9 +160,9 @@ public class QuickSort {
      * @param r
      */
     private static void findMaxN(int[] arr,int l,int r,int n){
-        if(l >= r)
+        if(l >= r) {
             return;
-        else{
+        } else{
             int p = partition2(arr,l,r);
             if(p == n){
                 System.out.println("第"+n+"大的数为：" + arr[p]);
